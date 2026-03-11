@@ -1,0 +1,15 @@
+[Unit]
+Description=GeoQuiz - Geography Quiz Game
+After=network.target
+
+[Service]
+Type=simple
+User=evan
+WorkingDirectory=/home/evan/dev/geoquiz
+Environment=PATH=/home/evan/.local/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/home/evan/.local/bin/uv run uvicorn geoquiz.app:app --host 0.0.0.0 --port 9500
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

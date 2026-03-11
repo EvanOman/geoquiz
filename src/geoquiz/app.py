@@ -1,3 +1,4 @@
+import os
 from dataclasses import asdict
 from pathlib import Path
 
@@ -9,7 +10,9 @@ from fastapi.templating import Jinja2Templates
 from geoquiz.config import STATIC_DIR, TEMPLATES_DIR
 from geoquiz.data.registry import all_quizzes, get_quiz, load_all
 
-app = FastAPI(title="GeoQuiz")
+# ROOT_PATH is set when behind a reverse proxy (e.g., /geoquiz)
+ROOT_PATH = os.environ.get("ROOT_PATH", "")
+app = FastAPI(title="GeoQuiz", root_path=ROOT_PATH)
 
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
@@ -18,16 +21,20 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 load_all()
 
 
+def _base_ctx(request: Request) -> dict:
+    """Base template context with root_path for URL prefixing."""
+    return {"request": request, "base": request.scope.get("root_path", "")}
+
+
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     quizzes = all_quizzes()
-    # Group by category
     categories: dict[str, list] = {}
     for q in quizzes:
         categories.setdefault(q.category, []).append(q)
     return templates.TemplateResponse(
         "index.html",
-        {"request": request, "quizzes": quizzes, "categories": categories},
+        {**_base_ctx(request), "quizzes": quizzes, "categories": categories},
     )
 
 
@@ -37,13 +44,12 @@ async def quiz_page(request: Request, quiz_id: str):
     if not quiz:
         return HTMLResponse("Quiz not found", status_code=404)
 
-    # Check if map SVG exists
     map_path = TEMPLATES_DIR / quiz.map_template
     has_map = map_path.exists()
 
     return templates.TemplateResponse(
         "quiz.html",
-        {"request": request, "quiz": quiz, "has_map": has_map},
+        {**_base_ctx(request), "quiz": quiz, "has_map": has_map},
     )
 
 

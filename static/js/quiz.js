@@ -15,6 +15,7 @@
     }
 
     // --- State ---
+    const basePath = window.BASE_PATH || "";
     const quizId = document.getElementById("quiz-container").dataset.quizId;
     let entries = [];
     let remaining = new Map(); // normalized answer -> entry index
@@ -41,7 +42,7 @@
 
     // --- Init ---
     async function init() {
-        const resp = await fetch(`/api/quiz/${quizId}`);
+        const resp = await fetch(`${basePath}/api/quiz/${quizId}`);
         const data = await resp.json();
         entries = data.entries;
         timeLimit = data.time_limit;
