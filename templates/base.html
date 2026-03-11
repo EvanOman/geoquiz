@@ -4,6 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}GeoQuiz{% endblock %}</title>
+    <script>
+        // Detect base path for reverse proxy support (e.g., /geoquiz).
+        // Tailscale Serve strips the path prefix, so the server always
+        // sees /, /quiz/xxx, etc. But the browser URL has /geoquiz/quiz/xxx.
+        // We detect the prefix and rewrite all absolute links on the page.
+        (function() {
+            var path = window.location.pathname;
+            var base = '';
+            var m = path.match(/^(\/[^/]+)(\/quiz\/|\/api\/|\/static\/|\/$|$)/);
+            if (m && !['/quiz','/api','/static'].includes(m[1])) {
+                base = m[1];
+            }
+            window.BASE_PATH = base;
+            if (base) {
+                // Rewrite all absolute href/src attributes after DOM loads
+                document.addEventListener('DOMContentLoaded', function() {
+                    document.querySelectorAll('a[href^="/"]').forEach(function(a) {
+                        a.href = base + a.getAttribute('href');
+                    });
+                    document.querySelectorAll('script[src^="/"]').forEach(function(s) {
+                        s.src = base + s.getAttribute('src');
+                    });
+                    document.querySelectorAll('link[href^="/"]').forEach(function(l) {
+                        l.href = base + l.getAttribute('href');
+                    });
+                });
+            }
+        })();
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -61,38 +90,38 @@
         .dark .state-border {
             stroke: #64748b;
         }
-        /* SVG map styles */
-        .country, .state {
+        /* SVG map styles — use #map-container for specificity parity with base rule */
+        #map-container .country, #map-container .state {
             fill: #e2e8f0;
             stroke: #94a3b8;
             stroke-width: 0.5;
             transition: fill 0.3s ease;
             cursor: pointer;
         }
-        .country:hover, .state:hover {
+        #map-container .country:hover, #map-container .state:hover {
             fill: #cbd5e1;
         }
-        .country.guessed, .state.guessed {
+        #map-container .country.guessed, #map-container .state.guessed {
             fill: #22c55e;
             stroke: #16a34a;
         }
-        .country.missed, .state.missed {
+        #map-container .country.missed, #map-container .state.missed {
             fill: #ef4444;
             stroke: #dc2626;
         }
         /* Dark mode SVG */
-        .dark .country, .dark .state {
+        .dark #map-container .country, .dark #map-container .state {
             fill: #334155;
             stroke: #64748b;
         }
-        .dark .country:hover, .dark .state:hover {
+        .dark #map-container .country:hover, .dark #map-container .state:hover {
             fill: #475569;
         }
-        .dark .country.guessed, .dark .state.guessed {
+        .dark #map-container .country.guessed, .dark #map-container .state.guessed {
             fill: #16a34a;
             stroke: #15803d;
         }
-        .dark .country.missed, .dark .state.missed {
+        .dark #map-container .country.missed, .dark #map-container .state.missed {
             fill: #dc2626;
             stroke: #b91c1c;
         }
@@ -120,7 +149,7 @@
 <body class="bg-surface-950 text-slate-100 min-h-screen">
     <nav class="border-b border-slate-800 bg-surface-900/80 backdrop-blur-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-            <a href="{{ base }}/" class="text-xl font-bold text-white tracking-tight">
+            <a href="/" class="text-xl font-bold text-white tracking-tight">
                 GeoQuiz
             </a>
             <button id="theme-toggle" class="p-2 rounded-lg hover:bg-slate-800 transition-colors text-slate-400 hover:text-slate-200">

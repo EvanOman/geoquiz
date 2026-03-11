@@ -1,6 +1,4 @@
-import os
 from dataclasses import asdict
-from pathlib import Path
 
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
@@ -10,20 +8,13 @@ from fastapi.templating import Jinja2Templates
 from geoquiz.config import STATIC_DIR, TEMPLATES_DIR
 from geoquiz.data.registry import all_quizzes, get_quiz, load_all
 
-# ROOT_PATH is set when behind a reverse proxy (e.g., /geoquiz)
-ROOT_PATH = os.environ.get("ROOT_PATH", "")
-app = FastAPI(title="GeoQuiz", root_path=ROOT_PATH)
+app = FastAPI(title="GeoQuiz")
 
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 # Register all quizzes on startup
 load_all()
-
-
-def _base_ctx(request: Request) -> dict:
-    """Base template context with root_path for URL prefixing."""
-    return {"request": request, "base": request.scope.get("root_path", "")}
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -34,7 +25,7 @@ async def index(request: Request):
         categories.setdefault(q.category, []).append(q)
     return templates.TemplateResponse(
         "index.html",
-        {**_base_ctx(request), "quizzes": quizzes, "categories": categories},
+        {"request": request, "quizzes": quizzes, "categories": categories},
     )
 
 
@@ -49,7 +40,7 @@ async def quiz_page(request: Request, quiz_id: str):
 
     return templates.TemplateResponse(
         "quiz.html",
-        {**_base_ctx(request), "quiz": quiz, "has_map": has_map},
+        {"request": request, "quiz": quiz, "has_map": has_map},
     )
 
 
