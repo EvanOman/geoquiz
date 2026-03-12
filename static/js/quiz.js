@@ -59,6 +59,7 @@
 
         // Start timer on first keystroke
         input.addEventListener("input", onInput);
+        input.addEventListener("compositionend", onInput);
         input.addEventListener("keydown", (e) => {
             if (e.key === "Tab") e.preventDefault(); // prevent tab-out
         });

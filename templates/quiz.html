@@ -109,5 +109,9 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="/static/js/quiz.js"></script>
+<script>
+    var s = document.createElement('script');
+    s.src = (window.BASE_PATH || '') + '/static/js/quiz.js';
+    document.body.appendChild(s);
+</script>
 {% endblock %}
