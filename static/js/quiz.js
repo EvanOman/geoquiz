@@ -108,7 +108,7 @@
 
                 // Update UI
                 updateUI(entry);
-                highlightOnMap(entry.id, "guessed");
+                highlightOnMap(entry, "guessed");
                 input.value = "";
 
                 // Check if done
@@ -140,12 +140,12 @@
             .join("");
     }
 
-    function highlightOnMap(entryId, className) {
+    function highlightOnMap(entry, className) {
         // Try finding element by ID (most maps use this)
-        let el = document.getElementById(entryId);
+        let el = document.getElementById(entry.id);
         if (!el) {
             // Try uppercase (US states use uppercase class)
-            el = document.getElementById(entryId.toUpperCase());
+            el = document.getElementById(entry.id.toUpperCase());
         }
 
         if (el) {
@@ -167,46 +167,20 @@
                 }
             }
 
-            // Try to add a text label
-            addMapLabel(el, entries.find((e) => e.id === entryId)?.display_name);
+            addMapLabel(entry);
         }
     }
 
-    function addMapLabel(el, name) {
-        if (!name) return;
+    function addMapLabel(entry) {
+        if (!entry.label_x || !entry.label_y) return;
         const svg = document.querySelector("#map-container svg");
         if (!svg) return;
 
-        let bbox;
-        try {
-            if (el.tagName.toLowerCase() === "g") {
-                // Get combined bounding box of group
-                const paths = el.querySelectorAll("path");
-                if (paths.length === 0) return;
-                bbox = paths[0].getBBox();
-                paths.forEach((p) => {
-                    const b = p.getBBox();
-                    const x1 = Math.min(bbox.x, b.x);
-                    const y1 = Math.min(bbox.y, b.y);
-                    const x2 = Math.max(bbox.x + bbox.width, b.x + b.width);
-                    const y2 = Math.max(bbox.y + bbox.height, b.y + b.height);
-                    bbox = { x: x1, y: y1, width: x2 - x1, height: y2 - y1 };
-                });
-            } else {
-                bbox = el.getBBox();
-            }
-        } catch {
-            return;
-        }
-
-        // Only add label if region is big enough
-        if (bbox.width < 15 || bbox.height < 10) return;
-
         const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        text.setAttribute("x", bbox.x + bbox.width / 2);
-        text.setAttribute("y", bbox.y + bbox.height / 2 + 2);
+        text.setAttribute("x", entry.label_x);
+        text.setAttribute("y", entry.label_y);
         text.setAttribute("class", "map-label");
-        text.textContent = name;
+        text.textContent = entry.display_name;
         svg.appendChild(text);
     }
 
@@ -240,7 +214,7 @@
         entries.forEach((entry, idx) => {
             if (!guessed.has(idx)) {
                 missed.push(entry);
-                highlightOnMap(entry.id, "missed");
+                highlightOnMap(entry, "missed");
             }
         });
 

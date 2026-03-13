@@ -6,6 +6,8 @@ class QuizEntry:
     id: str
     display_name: str
     accepted_answers: list[str]
+    label_x: float | None = None
+    label_y: float | None = None
 
 
 @dataclass
