@@ -29,7 +29,7 @@ window.GeoQuizEngine = (() => {
 
     // DOM refs (set during init since DOM is dynamically created)
     let input, correctEl, totalEl, timerEl, progressBar, scoreDisplay,
-        recentContainer, giveUpBtn, resultsModal;
+        recentContainer, giveUpBtn;
 
     function bindDOM() {
         input = document.getElementById("quiz-input");
@@ -40,7 +40,6 @@ window.GeoQuizEngine = (() => {
         scoreDisplay = document.getElementById("score-display");
         recentContainer = document.getElementById("recent-guesses");
         giveUpBtn = document.getElementById("give-up-btn");
-        resultsModal = document.getElementById("results-modal");
     }
 
     function resetState() {
@@ -106,14 +105,6 @@ window.GeoQuizEngine = (() => {
             if (e.key === "Tab") e.preventDefault();
         });
         giveUpBtn.addEventListener("click", giveUp);
-        document.getElementById("play-again-btn").addEventListener("click", () => {
-            window.location.hash = "#/quiz/" + quizId;
-            // Force re-init since hash didn't change
-            init(quizId);
-        });
-        resultsModal.addEventListener("click", e => {
-            if (e.target === resultsModal) resultsModal.classList.add("hidden");
-        });
 
         input.focus();
     }
@@ -263,11 +254,8 @@ window.GeoQuizEngine = (() => {
     function endQuiz(gaveUp) {
         quizEnded = true;
         clearInterval(timerInterval);
-        input.disabled = true;
-        input.placeholder = "Quiz ended";
-        giveUpBtn.disabled = true;
-        giveUpBtn.classList.add("opacity-50");
 
+        // Highlight missed on map/table
         const missed = [];
         entries.forEach((entry, idx) => {
             if (!guessed.has(idx)) {
@@ -283,30 +271,45 @@ window.GeoQuizEngine = (() => {
         const elapsed = startTime ? Math.floor((Date.now() - startTime) / 1000) : 0;
         const mins = Math.floor(elapsed / 60);
         const secs = elapsed % 60;
+        const timeStr = mins + ":" + secs.toString().padStart(2, "0");
+        const title = gaveUp ? "Quiz Over" : "Perfect Score!";
+        const subtitle = gaveUp
+            ? "You got " + correctCount + " out of " + totalCount
+            : "You named all " + totalCount + " in " + mins + "m " + secs + "s";
 
-        document.getElementById("results-correct").textContent = correctCount + "/" + totalCount;
-        document.getElementById("results-score").textContent = score;
-        document.getElementById("results-time").textContent = mins + ":" + secs.toString().padStart(2, "0");
-
-        if (gaveUp) {
-            document.getElementById("results-title").textContent = "Quiz Over";
-            document.getElementById("results-subtitle").textContent = "You got " + correctCount + " out of " + totalCount;
-        } else {
-            document.getElementById("results-title").textContent = "Perfect Score!";
-            document.getElementById("results-subtitle").textContent = "You named all " + totalCount + " in " + mins + "m " + secs + "s";
-        }
+        // Replace sidebar with inline results
+        const sidebar = document.getElementById("quiz-sidebar");
+        var html = '<div class="bg-surface-900 rounded-xl border border-slate-800 p-4">' +
+            '<h2 class="text-xl font-bold text-white mb-1">' + title + '</h2>' +
+            '<p class="text-slate-400 text-sm mb-4">' + subtitle + '</p>' +
+            '<div class="grid grid-cols-3 gap-3 mb-4">' +
+                '<div class="text-center"><div class="text-2xl font-bold text-green-400">' + correctCount + '/' + totalCount + '</div><div class="text-xs text-slate-500">Correct</div></div>' +
+                '<div class="text-center"><div class="text-2xl font-bold text-white">' + score + '</div><div class="text-xs text-slate-500">Score</div></div>' +
+                '<div class="text-center"><div class="text-2xl font-bold text-slate-300">' + timeStr + '</div><div class="text-xs text-slate-500">Time</div></div>' +
+            '</div>' +
+            '<div class="flex gap-3">' +
+                '<button id="play-again-btn" class="flex-1 py-2.5 px-4 rounded-xl bg-green-600 hover:bg-green-500 text-white font-medium transition-colors text-sm">Play Again</button>' +
+                '<a href="#/" class="flex-1 py-2.5 px-4 rounded-xl border border-slate-700 text-slate-300 hover:text-white hover:border-slate-600 text-center font-medium transition-colors text-sm">All Quizzes</a>' +
+            '</div>' +
+        '</div>';
 
         if (missed.length > 0) {
-            const missedSection = document.getElementById("missed-section");
-            const missedList = document.getElementById("missed-list");
-            missedSection.classList.remove("hidden");
-            missedList.innerHTML = missed
-                .map(e => '<span class="px-2 py-1 rounded bg-red-500/20 text-red-400 text-sm">' + e.display_name + '</span>')
-                .join("");
+            html += '<div class="bg-surface-900 rounded-xl border border-slate-800 p-4 flex-1 overflow-y-auto">' +
+                '<h3 class="text-sm font-medium text-slate-500 mb-2">Missed (' + missed.length + ')</h3>' +
+                '<div class="flex flex-wrap gap-1.5">' +
+                missed.map(function(e) {
+                    return '<span class="px-2 py-1 rounded bg-red-500/20 text-red-400 text-sm">' + e.display_name + '</span>';
+                }).join("") +
+                '</div></div>';
         }
 
-        resultsModal.classList.remove("hidden");
+        sidebar.innerHTML = html;
 
+        document.getElementById("play-again-btn").addEventListener("click", function() {
+            init(quizId);
+        });
+
+        // Save best score
         const bestKey = "geoquiz_best_" + quizId;
         const existing = localStorage.getItem(bestKey);
         const bestData = { correct: correctCount, total: totalCount, score: score, time: elapsed };

@@ -112,7 +112,7 @@
                 </div>
 
                 <!-- Sidebar -->
-                <div class="lg:w-[30%] w-full flex flex-col gap-3">
+                <div id="quiz-sidebar" class="lg:w-[30%] w-full flex flex-col gap-3">
                     <div class="bg-surface-900 rounded-xl border border-slate-800 p-4">
                         <div class="flex items-center justify-between mb-3">
                             <div class="text-2xl font-bold text-white">
@@ -144,42 +144,6 @@
                         class="w-full py-3 px-4 rounded-xl border border-slate-700 text-slate-400 hover:text-red-400 hover:border-red-500/50 transition-colors text-sm font-medium">
                         Give Up
                     </button>
-                </div>
-            </div>
-
-            <!-- Results modal -->
-            <div id="results-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-                <div class="bg-surface-900 rounded-2xl border border-slate-700 max-w-lg w-full max-h-[90vh] overflow-y-auto">
-                    <div class="p-6">
-                        <h2 class="text-2xl font-bold text-white mb-1" id="results-title">Quiz Complete!</h2>
-                        <p class="text-slate-400 mb-6" id="results-subtitle"></p>
-                        <div class="grid grid-cols-3 gap-4 mb-6">
-                            <div class="text-center">
-                                <div class="text-3xl font-bold text-green-400" id="results-correct">0</div>
-                                <div class="text-xs text-slate-500">Correct</div>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-3xl font-bold text-white" id="results-score">0</div>
-                                <div class="text-xs text-slate-500">Score</div>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-3xl font-bold text-slate-300" id="results-time">0:00</div>
-                                <div class="text-xs text-slate-500">Time</div>
-                            </div>
-                        </div>
-                        <div id="missed-section" class="mb-6 hidden">
-                            <h3 class="text-sm font-medium text-slate-500 mb-2">Missed answers</h3>
-                            <div id="missed-list" class="flex flex-wrap gap-1.5"></div>
-                        </div>
-                        <div class="flex gap-3">
-                            <button id="play-again-btn" class="flex-1 py-3 px-4 rounded-xl bg-green-600 hover:bg-green-500 text-white font-medium transition-colors">
-                                Play Again
-                            </button>
-                            <a href="#/" class="flex-1 py-3 px-4 rounded-xl border border-slate-700 text-slate-300 hover:text-white hover:border-slate-600 text-center font-medium transition-colors">
-                                All Quizzes
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </div>
         `;
