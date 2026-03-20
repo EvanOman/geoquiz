@@ -16,7 +16,9 @@
 
     // --- State ---
     const basePath = window.BASE_PATH || "";
-    const quizId = document.getElementById("quiz-container").dataset.quizId;
+    const container = document.getElementById("quiz-container");
+    const quizId = container.dataset.quizId;
+    const isMapQuiz = container.dataset.hasMap === "true";
     let entries = [];
     let remaining = new Map(); // normalized answer -> entry index
     let guessed = new Set(); // entry indices that have been guessed
@@ -56,6 +58,11 @@
                 if (norm) remaining.set(norm, idx);
             });
         });
+
+        // Build tabular grid for non-map quizzes
+        if (!isMapQuiz) {
+            buildTable();
+        }
 
         // Start timer on first keystroke
         input.addEventListener("input", onInput);
@@ -108,7 +115,11 @@
 
                 // Update UI
                 updateUI(entry);
-                highlightOnMap(entry, "guessed");
+                if (isMapQuiz) {
+                    highlightOnMap(entry, "guessed");
+                } else {
+                    revealInTable(idx, "guessed");
+                }
                 input.value = "";
 
                 // Check if done
@@ -184,6 +195,44 @@
         svg.appendChild(text);
     }
 
+    // --- Tabular quiz ---
+    function buildTable() {
+        const tc = document.getElementById("table-container");
+        if (!tc) return;
+        const grid = document.createElement("div");
+        grid.className =
+            "grid gap-1.5 h-full content-start";
+        // Pick column count based on entry count
+        const n = entries.length;
+        if (n <= 15) grid.classList.add("grid-cols-3", "sm:grid-cols-5");
+        else if (n <= 30) grid.classList.add("grid-cols-4", "sm:grid-cols-6");
+        else grid.classList.add("grid-cols-5", "sm:grid-cols-7", "lg:grid-cols-9");
+
+        entries.forEach((entry, idx) => {
+            const cell = document.createElement("div");
+            cell.id = "table-cell-" + idx;
+            cell.className =
+                "flex items-center justify-center rounded-lg bg-slate-800/60 border border-slate-700/50 text-slate-600 text-xs sm:text-sm font-medium px-1 py-2 text-center select-none transition-all duration-300 min-h-[2.5rem]";
+            cell.textContent = idx + 1;
+            grid.appendChild(cell);
+        });
+        tc.appendChild(grid);
+    }
+
+    function revealInTable(idx, className) {
+        const cell = document.getElementById("table-cell-" + idx);
+        if (!cell) return;
+        const entry = entries[idx];
+        cell.textContent = entry.display_name;
+        if (className === "guessed") {
+            cell.className =
+                "flex items-center justify-center rounded-lg bg-green-500/20 border border-green-500/40 text-green-400 text-xs sm:text-sm font-medium px-1 py-2 text-center select-none transition-all duration-300 min-h-[2.5rem]";
+        } else {
+            cell.className =
+                "flex items-center justify-center rounded-lg bg-red-500/15 border border-red-500/30 text-red-400 text-xs sm:text-sm font-medium px-1 py-2 text-center select-none transition-all duration-300 min-h-[2.5rem]";
+        }
+    }
+
     function updateTimer() {
         if (!startTime || quizEnded) return;
         const elapsed = Math.floor((Date.now() - startTime) / 1000);
@@ -214,7 +263,11 @@
         entries.forEach((entry, idx) => {
             if (!guessed.has(idx)) {
                 missed.push(entry);
-                highlightOnMap(entry, "missed");
+                if (isMapQuiz) {
+                    highlightOnMap(entry, "missed");
+                } else {
+                    revealInTable(idx, "missed");
+                }
             }
         });
 
