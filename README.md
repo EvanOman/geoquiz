@@ -2,6 +2,8 @@
 
 A free, ad-free geography quiz game. Type country names, capitals, or presidents — answers match instantly as you type (no Enter key needed). Inspired by Sporcle.
 
+**[Play it](https://evanoman.github.io/geoquiz/)**
+
 ![Landing page](docs/screenshots/landing.png)
 
 ## Quiz Types
@@ -33,37 +35,29 @@ For quizzes without maps (presidents, member states, etc.), a numbered grid reve
 
 ## Setup
 
-Requires Python 3.13+ and [uv](https://docs.astral.sh/uv/).
+No build step, no backend. Just static files.
 
 ```bash
 git clone https://github.com/EvanOman/geoquiz.git
 cd geoquiz
-uv sync
-just dev  # starts on port 9100
-```
-
-## Development
-
-```bash
-just dev          # dev server with hot reload
-just test         # run tests
-just lint         # check formatting and lint
-just fix          # auto-fix lint issues
+open index.html
+# or
+python -m http.server 9100
 ```
 
 ## How It Works
 
-- **Backend:** FastAPI + Jinja2 templates + uvicorn
-- **Frontend:** Tailwind CSS (CDN) + vanilla JavaScript — no build step
-- **Maps:** Inline SVGs with ISO-coded element IDs, highlighted via CSS classes
-- **Data:** Python dataclasses — no database
+- **Architecture:** Static single-page app — vanilla JavaScript + Tailwind CSS (CDN), no backend, no build step
+- **Routing:** Hash-based (`#/` for landing, `#/quiz/{id}` for quizzes)
+- **Data:** Quiz definitions loaded from static JSON files
+- **Maps:** SVG maps fetched and injected on demand, with ISO-coded element IDs for highlighting
 - **Answer matching:** Input is normalized (lowercase, strip diacritics/articles/punctuation) and checked against a pre-built `Map` on every keystroke for instant O(1) matching
 
 ## Scripts
 
 ```bash
 # Re-compute SVG label centroids after modifying maps
-uv run python scripts/compute_centroids.py
+python scripts/compute_centroids.py
 ```
 
 ## License

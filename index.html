@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoQuiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        surface: { 50:'#f8fafc', 100:'#f1f5f9', 200:'#e2e8f0', 700:'#334155', 800:'#1e293b', 900:'#0f172a', 950:'#020617' }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        #map-container svg path { fill: #cbd5e1; stroke: #94a3b8; stroke-width: 0.5; }
+        .dark #map-container svg path { fill: #1e293b; stroke: #475569; }
+        #large_masses_of_water, #Sea, #sea, #Lakes, #lakes,
+        #map-container svg path[id*="water"],
+        #map-container svg path[id*="sea"],
+        #map-container svg path[id*="lake"] { fill: #93c5fd !important; stroke: #93c5fd !important; }
+        .dark #large_masses_of_water, .dark #Sea, .dark #sea,
+        .dark #Lakes, .dark #lakes,
+        .dark #map-container svg path[id*="water"],
+        .dark #map-container svg path[id*="sea"],
+        .dark #map-container svg path[id*="lake"] { fill: #1e3a5f !important; stroke: #1e3a5f !important; }
+        .state-border { fill: none !important; stroke: #94a3b8; stroke-width: 0.3; }
+        .dark .state-border { stroke: #64748b; }
+        #map-container .country, #map-container .state { fill: #e2e8f0; stroke: #94a3b8; stroke-width: 0.5; transition: fill 0.3s ease; cursor: pointer; }
+        #map-container .country:hover, #map-container .state:hover { fill: #cbd5e1; }
+        #map-container .country.guessed, #map-container .state.guessed { fill: #22c55e; stroke: #16a34a; }
+        #map-container .country.missed, #map-container .state.missed { fill: #ef4444; stroke: #dc2626; }
+        .dark #map-container .country, .dark #map-container .state { fill: #334155; stroke: #64748b; }
+        .dark #map-container .country:hover, .dark #map-container .state:hover { fill: #475569; }
+        .dark #map-container .country.guessed, .dark #map-container .state.guessed { fill: #16a34a; stroke: #15803d; }
+        .dark #map-container .country.missed, .dark #map-container .state.missed { fill: #dc2626; stroke: #b91c1c; }
+        .map-label { font-size: 6px; fill: white; text-anchor: middle; pointer-events: none; font-weight: 600; }
+        @keyframes pulse-green { 0% { fill: #86efac; } 50% { fill: #22c55e; } 100% { fill: #22c55e; } }
+        .country.just-guessed, .state.just-guessed { animation: pulse-green 0.6s ease-out; }
+    </style>
+</head>
+<body class="bg-surface-950 text-slate-100 min-h-screen dark">
+    <!-- Nav bar - sticky -->
+    <nav class="border-b border-slate-800 bg-surface-900/80 backdrop-blur-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="#/" class="text-xl font-bold text-white tracking-tight">GeoQuiz</a>
+            <button id="theme-toggle" class="p-2 rounded-lg hover:bg-slate-800 transition-colors text-slate-400 hover:text-slate-200">
+                <!-- Sun icon (shown in dark mode) -->
+                <svg class="w-5 h-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <!-- Moon icon (shown in light mode) -->
+                <svg class="w-5 h-5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main content area - app.js renders here -->
+    <main id="app" class="max-w-7xl mx-auto px-4 py-6"></main>
+
+    <!-- Theme toggle script -->
+    <script>
+        const toggle = document.getElementById('theme-toggle');
+        toggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+        });
+        if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+
+    <!-- App scripts -->
+    <script src="js/app.js"></script>
+</body>
+</html>

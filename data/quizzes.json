@@ -1,0 +1,173 @@
+[
+  {
+    "id": "europe-countries",
+    "title": "Countries of Europe",
+    "description": "Name all 47 countries of Europe",
+    "category": "Continents",
+    "mapFile": "europe.svg",
+    "timeLimit": 564,
+    "entryCount": 47
+  },
+  {
+    "id": "european-capitals",
+    "title": "Capitals of Europe",
+    "description": "Name the capital of every European country",
+    "category": "Capitals",
+    "mapFile": "europe.svg",
+    "timeLimit": 564,
+    "entryCount": 47
+  },
+  {
+    "id": "africa-countries",
+    "title": "Countries of Africa",
+    "description": "Name all 54 countries of Africa",
+    "category": "Continents",
+    "mapFile": "africa.svg",
+    "timeLimit": 648,
+    "entryCount": 54
+  },
+  {
+    "id": "african-capitals",
+    "title": "Capitals of Africa",
+    "description": "Name the capital of every African country",
+    "category": "Capitals",
+    "mapFile": "africa.svg",
+    "timeLimit": 648,
+    "entryCount": 54
+  },
+  {
+    "id": "asia-countries",
+    "title": "Countries of Asia",
+    "description": "Name all 49 countries of Asia",
+    "category": "Continents",
+    "mapFile": "asia.svg",
+    "timeLimit": 588,
+    "entryCount": 49
+  },
+  {
+    "id": "asian-capitals",
+    "title": "Capitals of Asia",
+    "description": "Name the capital of every Asian country",
+    "category": "Capitals",
+    "mapFile": "asia.svg",
+    "timeLimit": 588,
+    "entryCount": 49
+  },
+  {
+    "id": "north-america-countries",
+    "title": "Countries of North America",
+    "description": "Name all 23 countries of North America",
+    "category": "Continents",
+    "mapFile": "north_america.svg",
+    "timeLimit": 276,
+    "entryCount": 23
+  },
+  {
+    "id": "north-american-capitals",
+    "title": "Capitals of North America",
+    "description": "Name the capital of every North American country",
+    "category": "Capitals",
+    "mapFile": "north_america.svg",
+    "timeLimit": 276,
+    "entryCount": 23
+  },
+  {
+    "id": "south-america-countries",
+    "title": "Countries of South America",
+    "description": "Name all 12 countries of South America",
+    "category": "Continents",
+    "mapFile": "south_america.svg",
+    "timeLimit": 144,
+    "entryCount": 12
+  },
+  {
+    "id": "south-american-capitals",
+    "title": "Capitals of South America",
+    "description": "Name the capital of every South American country",
+    "category": "Capitals",
+    "mapFile": "south_america.svg",
+    "timeLimit": 144,
+    "entryCount": 12
+  },
+  {
+    "id": "oceania-countries",
+    "title": "Countries of Oceania",
+    "description": "Name all 14 countries of Oceania",
+    "category": "Continents",
+    "mapFile": "oceania.svg",
+    "timeLimit": 168,
+    "entryCount": 14
+  },
+  {
+    "id": "us-states",
+    "title": "US States",
+    "description": "Name all 50 US states",
+    "category": "United States",
+    "mapFile": "us_states.svg",
+    "timeLimit": 600,
+    "entryCount": 50
+  },
+  {
+    "id": "us-state-capitals",
+    "title": "US State Capitals",
+    "description": "Name the capital of every US state",
+    "category": "United States",
+    "mapFile": "us_states.svg",
+    "timeLimit": 600,
+    "entryCount": 50
+  },
+  {
+    "id": "eu-member-states",
+    "title": "EU Member States",
+    "description": "Name all 27 member states of the European Union",
+    "category": "Regional",
+    "mapFile": null,
+    "timeLimit": 324,
+    "entryCount": 27
+  },
+  {
+    "id": "nato-member-states",
+    "title": "NATO Member States",
+    "description": "Name all 32 members of the NATO alliance",
+    "category": "Regional",
+    "mapFile": null,
+    "timeLimit": 384,
+    "entryCount": 32
+  },
+  {
+    "id": "middle-east-countries",
+    "title": "Countries of the Middle East",
+    "description": "Name all 16 countries of the Middle East",
+    "category": "Regional",
+    "mapFile": "asia.svg",
+    "timeLimit": 192,
+    "entryCount": 16
+  },
+  {
+    "id": "southeast-asia-countries",
+    "title": "Countries of Southeast Asia",
+    "description": "Name all 11 countries of Southeast Asia",
+    "category": "Regional",
+    "mapFile": "asia.svg",
+    "timeLimit": 132,
+    "entryCount": 11
+  },
+  {
+    "id": "us-presidents",
+    "title": "US Presidents",
+    "description": "Name all 45 unique Presidents of the United States",
+    "category": "History",
+    "mapFile": null,
+    "timeLimit": 540,
+    "entryCount": 45
+  },
+  {
+    "id": "largest-countries",
+    "title": "World's Largest Countries",
+    "description": "Name the 30 largest countries in the world by area",
+    "category": "Trivia",
+    "mapFile": null,
+    "timeLimit": 360,
+    "entryCount": 30
+  }
+]
