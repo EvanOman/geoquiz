@@ -39,8 +39,7 @@ async def quiz_page(request: Request, quiz_id: str):
     if not quiz:
         return HTMLResponse("Quiz not found", status_code=404)
 
-    map_path = TEMPLATES_DIR / quiz.map_template
-    has_map = map_path.exists()
+    has_map = quiz.map_template is not None and (TEMPLATES_DIR / quiz.map_template).exists()
 
     return templates.TemplateResponse(
         "quiz.html",

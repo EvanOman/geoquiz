@@ -4,7 +4,6 @@ QUIZ = Quiz(
     id="us-presidents",
     title="US Presidents",
     description="Name all 45 unique Presidents of the United States",
-    map_template="maps/none.svg",
     time_limit=45 * 12,
     category="History",
     entries=[

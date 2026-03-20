@@ -4,7 +4,6 @@ QUIZ = Quiz(
     id="largest-countries",
     title="World's Largest Countries",
     description="Name the 30 largest countries in the world by area",
-    map_template="maps/none.svg",
     time_limit=30 * 12,
     category="Trivia",
     entries=[

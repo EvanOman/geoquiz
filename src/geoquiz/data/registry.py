@@ -15,9 +15,9 @@ class Quiz:
     id: str
     title: str
     description: str
-    map_template: str
     time_limit: int
     category: str
+    map_template: str | None = None
     entries: list[QuizEntry] = field(default_factory=list)
 
 
