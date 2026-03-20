@@ -12,11 +12,19 @@ QUIZ = Quiz(
         QuizEntry("ao", "Angola", ["angola"], label_x=1433.3, label_y=904.4),
         QuizEntry("bj", "Benin", ["benin"], label_x=1288.6, label_y=678.5),
         QuizEntry("bw", "Botswana", ["botswana"], label_x=1450.5, label_y=952.3),
-        QuizEntry("bf", "Burkina Faso", ["burkina faso", "upper volta"], label_x=1257.2, label_y=654.5),
+        QuizEntry(
+            "bf", "Burkina Faso", ["burkina faso", "upper volta"], label_x=1257.2, label_y=654.5
+        ),
         QuizEntry("bi", "Burundi", ["burundi"], label_x=1499.3, label_y=787.5),
         QuizEntry("cv", "Cabo Verde", ["cabo verde", "cape verde"], label_x=1108.4, label_y=648.7),
         QuizEntry("cm", "Cameroon", ["cameroon"], label_x=1370.2, label_y=701.9),
-        QuizEntry("cf", "Central African Republic", ["central african republic", "car"], label_x=1427.8, label_y=704.7),
+        QuizEntry(
+            "cf",
+            "Central African Republic",
+            ["central african republic", "car"],
+            label_x=1427.8,
+            label_y=704.7,
+        ),
         QuizEntry("td", "Chad", ["chad"], label_x=1410.8, label_y=629.8),
         QuizEntry("km", "Comoros", ["comoros"], label_x=1616.4, label_y=882.6),
         QuizEntry(
@@ -51,13 +59,21 @@ QUIZ = Quiz(
         QuizEntry("eg", "Egypt", ["egypt", "misr"], label_x=1498.0, label_y=525.1),
         QuizEntry("gq", "Equatorial Guinea", ["equatorial guinea"], label_x=1377.1, label_y=787.5),
         QuizEntry("er", "Eritrea", ["eritrea"], label_x=1600.3, label_y=675.4),
-        QuizEntry("sz", "Eswatini", ["eswatini", "swaziland", "kingdom of eswatini"], label_x=1506.6, label_y=989.4),
+        QuizEntry(
+            "sz",
+            "Eswatini",
+            ["eswatini", "swaziland", "kingdom of eswatini"],
+            label_x=1506.6,
+            label_y=989.4,
+        ),
         QuizEntry("et", "Ethiopia", ["ethiopia"], label_x=1574.2, label_y=683.2),
         QuizEntry("ga", "Gabon", ["gabon"], label_x=1388.3, label_y=811.5),
         QuizEntry("gm", "Gambia", ["gambia", "the gambia"], label_x=1153.2, label_y=643.3),
         QuizEntry("gh", "Ghana", ["ghana"], label_x=1262.5, label_y=691.4),
         QuizEntry("gn", "Guinea", ["guinea"], label_x=1216.4, label_y=716.1),
-        QuizEntry("gw", "Guinea-Bissau", ["guinea-bissau", "guinea bissau"], label_x=1184.7, label_y=701.7),
+        QuizEntry(
+            "gw", "Guinea-Bissau", ["guinea-bissau", "guinea bissau"], label_x=1184.7, label_y=701.7
+        ),
         QuizEntry("ke", "Kenya", ["kenya"], label_x=1559.8, label_y=754.4),
         QuizEntry("ls", "Lesotho", ["lesotho"], label_x=1480.8, label_y=1015.7),
         QuizEntry("lr", "Liberia", ["liberia"], label_x=1200.2, label_y=703.0),

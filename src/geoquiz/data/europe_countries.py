@@ -10,8 +10,16 @@ QUIZ = Quiz(
     entries=[
         QuizEntry("al", "Albania", ["albania", "shqiperia"], label_x=402.5, label_y=441.7),
         QuizEntry("ad", "Andorra", ["andorra"], label_x=231.0, label_y=426.1),
-        QuizEntry("at", "Austria", ["austria", "osterreich", "oesterreich"], label_x=337.0, label_y=368.3),
-        QuizEntry("by", "Belarus", ["belarus", "byelorussia", "belorussia", "white russia"], label_x=439.6, label_y=279.2),
+        QuizEntry(
+            "at", "Austria", ["austria", "osterreich", "oesterreich"], label_x=337.0, label_y=368.3
+        ),
+        QuizEntry(
+            "by",
+            "Belarus",
+            ["belarus", "byelorussia", "belorussia", "white russia"],
+            label_x=439.6,
+            label_y=279.2,
+        ),
         QuizEntry("be", "Belgium", ["belgium", "belgique", "belgie"], label_x=266.0, label_y=329.9),
         QuizEntry(
             "ba",
@@ -21,7 +29,9 @@ QUIZ = Quiz(
         QuizEntry("bg", "Bulgaria", ["bulgaria"], label_x=447.2, label_y=412.9),
         QuizEntry("hr", "Croatia", ["croatia", "hrvatska"], label_x=363.5, label_y=404.5),
         QuizEntry("cy", "Cyprus", ["cyprus", "kypros", "kibris"], label_x=545.9, label_y=484.1),
-        QuizEntry("cz", "Czechia", ["czechia", "czech republic", "cesko"], label_x=351.9, label_y=339.4),
+        QuizEntry(
+            "cz", "Czechia", ["czechia", "czech republic", "cesko"], label_x=351.9, label_y=339.4
+        ),
         QuizEntry("dk", "Denmark", ["denmark", "danmark"], label_x=307.8, label_y=266.4),
         QuizEntry("ee", "Estonia", ["estonia", "eesti"], label_x=402.3, label_y=222.4),
         QuizEntry("fi", "Finland", ["finland", "suomi"], label_x=388.9, label_y=154.8),
@@ -30,18 +40,36 @@ QUIZ = Quiz(
         QuizEntry("gr", "Greece", ["greece", "hellas", "ellada"], label_x=442.3, label_y=468.9),
         QuizEntry("hu", "Hungary", ["hungary", "magyarorszag"], label_x=386.6, label_y=368.1),
         QuizEntry("is", "Iceland", ["iceland", "island"], label_x=158.0, label_y=116.2),
-        QuizEntry("ie", "Ireland", ["ireland", "republic of ireland", "eire"], label_x=171.7, label_y=279.8),
+        QuizEntry(
+            "ie",
+            "Ireland",
+            ["ireland", "republic of ireland", "eire"],
+            label_x=171.7,
+            label_y=279.8,
+        ),
         QuizEntry("it", "Italy", ["italy", "italia"], label_x=332.4, label_y=435.7),
         QuizEntry("xk", "Kosovo", ["kosovo", "kosova", "kosove"], label_x=408.2, label_y=423.2),
         QuizEntry("lv", "Latvia", ["latvia", "latvija"], label_x=406.9, label_y=243.7),
         QuizEntry("li", "Liechtenstein", ["liechtenstein"], label_x=304.3, label_y=374.2),
         QuizEntry("lt", "Lithuania", ["lithuania", "lietuva"], label_x=405.7, label_y=264.0),
-        QuizEntry("lu", "Luxembourg", ["luxembourg", "luxemburg", "letzebuerg"], label_x=276.8, label_y=340.7),
+        QuizEntry(
+            "lu",
+            "Luxembourg",
+            ["luxembourg", "luxemburg", "letzebuerg"],
+            label_x=276.8,
+            label_y=340.7,
+        ),
         QuizEntry("mt", "Malta", ["malta"], label_x=351.9, label_y=510.8),
         QuizEntry("md", "Moldova", ["moldova", "moldavia"], label_x=463.5, label_y=354.5),
         QuizEntry("mc", "Monaco", ["monaco"], label_x=284.7, label_y=415.9),
         QuizEntry("me", "Montenegro", ["montenegro", "crna gora"], label_x=392.9, label_y=423.5),
-        QuizEntry("nl", "Netherlands", ["netherlands", "holland", "the netherlands"], label_x=272.3, label_y=310.3),
+        QuizEntry(
+            "nl",
+            "Netherlands",
+            ["netherlands", "holland", "the netherlands"],
+            label_x=272.3,
+            label_y=310.3,
+        ),
         QuizEntry(
             "mk",
             "North Macedonia",
@@ -56,16 +84,20 @@ QUIZ = Quiz(
         QuizEntry("pl", "Poland", ["poland", "polska"], label_x=377.7, label_y=308.7),
         QuizEntry("pt", "Portugal", ["portugal"], label_x=135.3, label_y=445.4),
         QuizEntry("ro", "Romania", ["romania"], label_x=441.5, label_y=378.2),
-        QuizEntry("ru", "Russia", ["russia", "russian federation", "rossiya"], label_x=525.3, label_y=159.1),
+        QuizEntry(
+            "ru",
+            "Russia",
+            ["russia", "russian federation", "rossiya"],
+            label_x=525.3,
+            label_y=159.1,
+        ),
         QuizEntry("sm", "San Marino", ["san marino"], label_x=330.3, label_y=413.5),
         QuizEntry("rs", "Serbia", ["serbia", "srbija"], label_x=403.7, label_y=404.8),
         QuizEntry("sk", "Slovakia", ["slovakia", "slovak republic"], label_x=387.4, label_y=349.2),
         QuizEntry("si", "Slovenia", ["slovenia", "slovenija"], label_x=350.4, label_y=385.6),
         QuizEntry("es", "Spain", ["spain", "espana"], label_x=183.2, label_y=444.9),
         QuizEntry("se", "Sweden", ["sweden", "sverige"], label_x=347.1, label_y=195.7),
-        QuizEntry(
-            "ch", "Switzerland", ["switzerland", "schweiz", "suisse", "svizzera", "svizra"]
-        ),
+        QuizEntry("ch", "Switzerland", ["switzerland", "schweiz", "suisse", "svizzera", "svizra"]),
         QuizEntry("tr", "Turkey", ["turkey", "turkiye"], label_x=528.5, label_y=435.3),
         QuizEntry("ua", "Ukraine", ["ukraine"], label_x=487.1, label_y=335.0),
         QuizEntry(
@@ -73,6 +105,12 @@ QUIZ = Quiz(
             "United Kingdom",
             ["united kingdom", "uk", "great britain", "britain", "england"],
         ),
-        QuizEntry("va", "Vatican City", ["vatican city", "holy see", "the vatican", "vatican"], label_x=331.1, label_y=438.6),
+        QuizEntry(
+            "va",
+            "Vatican City",
+            ["vatican city", "holy see", "the vatican", "vatican"],
+            label_x=331.1,
+            label_y=438.6,
+        ),
     ],
 )

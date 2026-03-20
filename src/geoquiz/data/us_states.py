@@ -54,7 +54,9 @@ QUIZ = Quiz(
         QuizEntry("ut", "Utah", ["utah"], label_x=217.3, label_y=251.6),
         QuizEntry("vt", "Vermont", ["vermont"], label_x=846.3, label_y=126.1),
         QuizEntry("va", "Virginia", ["virginia"], label_x=786.7, label_y=286.9),
-        QuizEntry("wa", "Washington", ["washington", "washington state"], label_x=99.9, label_y=40.9),
+        QuizEntry(
+            "wa", "Washington", ["washington", "washington state"], label_x=99.9, label_y=40.9
+        ),
         QuizEntry("wv", "West Virginia", ["west virginia"], label_x=746.7, label_y=262.3),
         QuizEntry("wi", "Wisconsin", ["wisconsin"], label_x=577.5, label_y=147.9),
         QuizEntry("wy", "Wyoming", ["wyoming"], label_x=295.6, label_y=181.9),

@@ -17,15 +17,19 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 load_all()
 
 
+CATEGORY_ORDER = ["Continents", "Capitals", "United States", "Regional", "History", "Trivia"]
+
+
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     quizzes = all_quizzes()
     categories: dict[str, list] = {}
     for q in quizzes:
         categories.setdefault(q.category, []).append(q)
+    ordered = [(cat, categories[cat]) for cat in CATEGORY_ORDER if cat in categories]
     return templates.TemplateResponse(
         "index.html",
-        {"request": request, "quizzes": quizzes, "categories": categories},
+        {"request": request, "quizzes": quizzes, "categories": ordered},
     )
 
 

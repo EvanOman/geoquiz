@@ -25,6 +25,9 @@ src = ["src", "tests"]
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
 
+[tool.ruff.lint.per-file-ignores]
+"src/geoquiz/data/*.py" = ["E501"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 

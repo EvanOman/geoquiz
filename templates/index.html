@@ -8,76 +8,73 @@
     <p class="text-slate-400 text-lg">Test your geography knowledge. Free, no ads, no signup.</p>
 </div>
 
-<!-- Category filter tabs -->
-<div class="flex gap-2 mb-6 justify-center flex-wrap">
-    <button class="filter-tab active px-4 py-2 rounded-full text-sm font-medium transition-colors bg-slate-700 text-white" data-category="all">
-        All
-    </button>
-    {% for category in categories %}
-    <button class="filter-tab px-4 py-2 rounded-full text-sm font-medium transition-colors bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white" data-category="{{ category }}">
-        {{ category }}
-    </button>
-    {% endfor %}
-</div>
-
-<!-- Quiz grid -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="quiz-grid">
-    {% for quiz in quizzes %}
-    <a href="/quiz/{{ quiz.id }}"
-       class="quiz-card group block rounded-xl border border-slate-800 bg-surface-900 hover:bg-surface-800 hover:border-slate-700 transition-all duration-200 overflow-hidden"
-       data-category="{{ quiz.category }}">
-        <div class="p-5">
-            <div class="flex items-start justify-between mb-3">
-                <h2 class="text-lg font-semibold text-white group-hover:text-green-400 transition-colors">
-                    {{ quiz.title }}
-                </h2>
-                <span class="text-xs px-2 py-1 rounded-full bg-slate-800 text-slate-400 whitespace-nowrap ml-2">
-                    {{ quiz.category }}
-                </span>
-            </div>
-            <p class="text-slate-400 text-sm mb-4">{{ quiz.description }}</p>
-            <div class="flex items-center justify-between">
-                <span class="text-sm text-slate-500">
-                    {{ quiz.entries | length }} {{ "states" if quiz.category == "United States" else "countries" }}
-                </span>
-                <span class="best-score text-sm text-green-500 font-medium hidden" data-quiz-id="{{ quiz.id }}"></span>
-            </div>
+{% for category_name, category_quizzes in categories %}
+<div class="mb-6">
+    <button
+        class="category-toggle w-full flex items-center justify-between px-4 py-3 rounded-xl bg-surface-900 border border-slate-800 hover:border-slate-700 transition-colors group"
+        data-category="{{ category_name }}"
+        aria-expanded="true"
+    >
+        <div class="flex items-center gap-3">
+            <h2 class="text-lg font-semibold text-white">{{ category_name }}</h2>
+            <span class="text-xs px-2 py-0.5 rounded-full bg-slate-800 text-slate-500">
+                {{ category_quizzes | length }}
+            </span>
         </div>
-    </a>
-    {% endfor %}
+        <svg class="category-chevron w-5 h-5 text-slate-500 group-hover:text-slate-300 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+    </button>
+    <div class="category-content grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mt-3">
+        {% for quiz in category_quizzes %}
+        <a href="/quiz/{{ quiz.id }}"
+           class="quiz-card group block rounded-xl border border-slate-800 bg-surface-900 hover:bg-surface-800 hover:border-slate-700 transition-all duration-200 overflow-hidden"
+           data-quiz-id="{{ quiz.id }}">
+            <div class="p-4">
+                <h3 class="text-base font-semibold text-white group-hover:text-green-400 transition-colors mb-1">
+                    {{ quiz.title }}
+                </h3>
+                <p class="text-slate-400 text-sm mb-3">{{ quiz.description }}</p>
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-slate-500">
+                        {{ quiz.entries | length }} entries
+                    </span>
+                    <span class="best-score text-sm text-green-500 font-medium hidden" data-quiz-id="{{ quiz.id }}"></span>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
 </div>
+{% endfor %}
 {% endblock %}
 
 {% block scripts %}
 <script>
-    // Category filter
-    document.querySelectorAll('.filter-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-            document.querySelectorAll('.filter-tab').forEach(t => {
-                t.classList.remove('active', 'bg-slate-700', 'text-white');
-                t.classList.add('bg-slate-800', 'text-slate-400');
-            });
-            tab.classList.add('active', 'bg-slate-700', 'text-white');
-            tab.classList.remove('bg-slate-800', 'text-slate-400');
-
-            const category = tab.dataset.category;
-            document.querySelectorAll('.quiz-card').forEach(card => {
-                if (category === 'all' || card.dataset.category === category) {
-                    card.style.display = '';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
+    // Collapsible category sections
+    document.querySelectorAll('.category-toggle').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            var content = btn.nextElementSibling;
+            var chevron = btn.querySelector('.category-chevron');
+            var expanded = btn.getAttribute('aria-expanded') === 'true';
+            btn.setAttribute('aria-expanded', !expanded);
+            if (expanded) {
+                content.style.display = 'none';
+                chevron.style.transform = 'rotate(-90deg)';
+            } else {
+                content.style.display = '';
+                chevron.style.transform = '';
+            }
         });
     });
 
     // Show best scores from localStorage
-    document.querySelectorAll('.best-score').forEach(el => {
-        const quizId = el.dataset.quizId;
-        const best = localStorage.getItem(`geoquiz_best_${quizId}`);
+    document.querySelectorAll('.best-score').forEach(function(el) {
+        var quizId = el.dataset.quizId;
+        var best = localStorage.getItem('geoquiz_best_' + quizId);
         if (best) {
-            const data = JSON.parse(best);
-            el.textContent = `Best: ${data.correct}/${data.total}`;
+            var data = JSON.parse(best);
+            el.textContent = 'Best: ' + data.correct + '/' + data.total;
             el.classList.remove('hidden');
         }
     });
